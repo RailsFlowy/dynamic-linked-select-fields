@@ -1,0 +1,28 @@
+<%= form_with model: contact do |f| %>
+  <p>
+    <%= f.label :name %>
+    <%= f.text_field :name %>
+  </p>
+
+  <p>
+    <%= f.label :email %>
+    <%= f.text_field :email %>
+  </p>
+
+  <div data-controller="dynamic-select"
+       data-dynamic-select-url-value="<%= cities_path %>">
+
+    <p>
+      <%= f.label :country_id, 'Country' %>
+      <%= f.collection_select :country_id, Country.order(:name), :id, :name,
+              { prompt: 'Select Country' },
+              { data: { action: "change->dynamic-select#change" } } %>
+    </p>
+
+    <p>
+      <%= f.label :city_id, 'City' %>
+      <%= f.collection_select :city_id, [], :id, :name, {},
+              { data: { dynamic_select_target: "select" } } %>
+    </p>
+  </div>
+<% end %>
